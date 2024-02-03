@@ -4,7 +4,7 @@ Welcome to the Meme Generator React App! This web application allows users to cr
 
 ## Live Demo
 
-Explore the live demo [here](http).
+Explore the live demo [here](https://animated-pie-7df3e7.netlify.app/).
 
 
 ## Features
@@ -19,7 +19,9 @@ Explore the live demo [here](http).
 ### Prerequisites
 
 - Node.js and npm installed on your machine.
+
+
 ###Technologies Used
--React
--Bootstrap
--React Router
+- React
+- Bootstrap
+- React Router
