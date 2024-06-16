@@ -1,10 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import Draggable from "react-draggable";
 
 const Text = () => {
   const [editMode, setEditMode] = useState(false);
   const [val, setVal] = useState("Double Click to Edit");
   const [fontSize, setFontSize] = useState(16); // Default font size
+
+  const inputRef = useRef(null);
 
   const inputStyle = {
     border: "1px solid #ced4da",
@@ -27,10 +29,24 @@ const Text = () => {
     setFontSize((prevSize) => Math.max(prevSize - 2, 10)); // Ensure minimum font size
   };
 
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      // Check if clicked element is not inside the input field
+      if (inputRef.current && !inputRef.current.contains(e.target)) {
+        setEditMode(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
   return (
     <Draggable>
       {editMode ? (
-        <div>
+        <div ref={inputRef}>
           <input
             style={inputStyle}
             onDoubleClick={(e) => setEditMode(false)}
@@ -43,7 +59,11 @@ const Text = () => {
           </div>
         </div>
       ) : (
-        <h1 style={headingStyle} onDoubleClick={(e) => setEditMode(true)}>
+        <h1
+          style={headingStyle}
+          onDoubleClick={(e) => setEditMode(true)}
+          ref={inputRef}
+        >
           {val}
         </h1>
       )}
